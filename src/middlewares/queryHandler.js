@@ -1,6 +1,6 @@
 "use strict";
 /* -------------------------------------------------------
-    NODEJS EXPRESS | CLARUSWAY FullStack Team
+    NODEJS EXPRESS | FlightAPI
 ------------------------------------------------------- */
 
 module.exports = (req, res, next) => {

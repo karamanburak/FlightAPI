@@ -1,9 +1,8 @@
-"use strict"
+"use strict";
 /* -------------------------------------------------------
-    NODEJS EXPRESS | CLARUSWAY FullStack Team
+    NODEJS EXPRESS | FlightAPI
 ------------------------------------------------------- */
 // app.use(errorHandler):
-
 
 module.exports = (err, req, res, next) => {
   const statusCode = err.statusCode || 500;

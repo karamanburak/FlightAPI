@@ -1,6 +1,6 @@
 "use strict";
 /* -------------------------------------------------------
-    NODEJS EXPRESS | CLARUSWAY FullStack Team
+    NODEJS EXPRESS | FlightAPI
 ------------------------------------------------------- */
 const router = require("express").Router();
 /* ------------------------------------------------------- */
