@@ -14,6 +14,8 @@ router.use("/auth", require("./auth"));
 router.use("/users", require("./user"));
 // flights:
 router.use("/flights", require("./flight"));
+// passengers:
+router.use("/passengers", require("./passenger"));
 
 // document:
 router.use("/documents", require("./documents"));

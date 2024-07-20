@@ -18,7 +18,14 @@ module.exports = {
                 </ul>
             `
         */
-    const flights = await res.getModelList(Flight);
+    const flights = await res.getModelList(
+      Flight,
+      {},
+      {
+        path: "createdId",
+        select: "username email",
+      }
+    );
     res.status(200).send({
       error: false,
       details: await res.getModelListDetails(Flight),
