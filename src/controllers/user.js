@@ -63,6 +63,10 @@ module.exports = {
             #swagger.tags = ["Users"]
             #swagger.summary = "Update User"
         */
+
+    if (req.file) {
+      req.body.avatar = "/uploads/" + req.file.filename;
+    }
     const data = await User.updateOne({ _id: req.params.id }, req.body, {
       runValidators: true,
     });
