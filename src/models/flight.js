@@ -5,9 +5,10 @@
 
 const { mongoose } = require("../configs/dbConnection");
 
-const FlightSchema = new mongoose.Schhema(
+const FlightSchema = new mongoose.Schema(
   {
     flightNumber: {
+      //IS-AN-001
       type: String,
       trim: true,
       required: true,
@@ -19,9 +20,9 @@ const FlightSchema = new mongoose.Schhema(
       required: true,
     },
     // departure: {
-    //   type: mongoose.Schema.Types.ObjectId,
-    //   ref:"City",
-    //   required: true,
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: "City",
+    //     required:true
     // },
     departure: {
       type: String,
@@ -33,9 +34,9 @@ const FlightSchema = new mongoose.Schhema(
       required: true,
     },
     // arrival: {
-    //   type: mongoose.Schema.Types.ObjectId,
-    //   ref:"City",
-    //   required: true,
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: "City",
+    //     required:true
     // },
     arrival: {
       type: String,
@@ -58,4 +59,4 @@ const FlightSchema = new mongoose.Schhema(
   }
 );
 
-module.exports = mongoose.mode("Flight", FlightSchema);
+module.exports = mongoose.model("Flight", FlightSchema);

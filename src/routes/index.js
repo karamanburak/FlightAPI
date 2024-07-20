@@ -10,8 +10,10 @@ const router = require("express").Router();
 
 // auth:
 router.use("/auth", require("./auth"));
-// user:
+// users:
 router.use("/users", require("./user"));
+// flights:
+router.use("/flights", require("./flight"));
 
 // document:
 router.use("/documents", require("./documents"));

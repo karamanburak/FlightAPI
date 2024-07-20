@@ -8,7 +8,7 @@ const user = require("../controllers/user");
 const idValidation = require("../middlewares/idValidation");
 const upload = require("../middlewares/upload");
 
-//* /users
+//* "/users"
 router.route("/").get(user.list).post(upload.single("avatar"), user.create);
 
 router

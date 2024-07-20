@@ -20,12 +20,12 @@ module.exports = {
                 </ul>
             `
         */
-    const data = await res.getModelList(User);
+    const users = await res.getModelList(User);
     res.status(200).send({
       error: false,
       details: await res.getModelListDetails,
-      totalRecords: data.length,
-      data,
+      totalRecords: users.length,
+      users,
     });
   },
   //! CRUD(Create-Read-Update-Delete)
@@ -40,11 +40,11 @@ module.exports = {
       req.body.avatar = "/uploads/" + req.file.filename;
     }
 
-    const data = await User.create(req.body);
+    const newUser = await User.create(req.body);
 
     res.status(201).send({
       error: false,
-      data,
+      newUser,
     });
   },
   read: async (req, res) => {
@@ -52,10 +52,10 @@ module.exports = {
             #swagger.tags = ["Users"]
             #swagger.summary = "Get Single User"
         */
-    const data = await User.findOne({ _id: req.params.id });
+    const user = await User.findOne({ _id: req.params.id });
     res.status(200).send({
       error: false,
-      data,
+      user,
     });
   },
   update: async (req, res) => {
@@ -67,14 +67,14 @@ module.exports = {
     if (req.file) {
       req.body.avatar = "/uploads/" + req.file.filename;
     }
-    const data = await User.updateOne({ _id: req.params.id }, req.body, {
+    const user = await User.updateOne({ _id: req.params.id }, req.body, {
       runValidators: true,
     });
 
     res.status(202).send({
       error: false,
-      data,
-      newData: await User.findOne({ _id: req.params.id }),
+      user,
+      updatedUser: await User.findOne({ _id: req.params.id }),
     });
   },
   delete: async (req, res) => {
@@ -82,10 +82,10 @@ module.exports = {
             #swagger.tags = ["Users"]
             #swagger.summary = "Delete User"
         */
-    const data = await User.deleteOne({ _id: req.params.id });
-    res.status(data.deletedCount ? 204 : 404).send({
-      error: !data.deletedCount,
-      data,
+    const users = await User.deleteOne({ _id: req.params.id });
+    res.status(users.deletedCount ? 204 : 404).send({
+      error: !users.deletedCount,
+      users,
       message: "User not found!",
     });
   },
