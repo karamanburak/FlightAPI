@@ -5,6 +5,7 @@ const { CustomError } = require("../errors/customError");
 ------------------------------------------------------- */
 const Reservation = require("../models/reservation");
 const Passenger = require("../models/passenger");
+const processPassengers = require("../helpers/processPassengers");
 
 module.exports = {
   list: async (req, res) => {
@@ -27,10 +28,10 @@ module.exports = {
       customFilter = { createdId: req.user._id };
     }
 
-    const reservations = await res.getModelList(Reservation, customFilter, {
-      path: "createdId",
-      select: "username email",
-    });
+    const reservations = await res.getModelList(Reservation, customFilter, [
+      "passengers",
+      "createdId",
+    ]);
     res.status(200).send({
       error: false,
       details: await res.getModelListDetails(Reservation, customFilter),
@@ -61,27 +62,33 @@ module.exports = {
     //   },
     // ];
 
-    let passengerInfos = req.body?.passengers || [],
-      passengerIds = [],
-      passenger = {};
+    // let passengerInfos = req.body?.passengers || [],
+    //   passengerIds = [],
+    //   passenger = {};
 
-    for (let passengerInfo of passengerInfos) {
-      if (typeof passengerInfo == "object") {
-        passenger = await Passenger.findOne({ email: passengerInfo.email }); //* reelde email degil unique olan tckn/passportId
-        if (!passenger) {
-          // passengerInfo = { ...passengerInfo, createdId: req.user._id };
-          Object.assign(passengerInfo, { createdId: req.user._id }); //* passenger create ederken benden createdId değeri bekliyor.
+    // for (let passengerInfo of passengerInfos) {
+    //   if (typeof passengerInfo == "object") {
+    //     passenger = await Passenger.findOne({ email: passengerInfo.email }); //* reelde email degil unique olan tckn/passportId
+    //     if (!passenger) {
+    //       // passengerInfo = { ...passengerInfo, createdId: req.user._id };
+    //       Object.assign(passengerInfo, { createdId: req.user._id }); //* passenger create ederken benden createdId değeri bekliyor.
 
-          passenger = await Passenger.create(passengerInfo);
-        }
-      } else {
-        //* string olarak id bilgisi gelirse
-        passenger = await Passenger.findOne({ _id: passengerInfo }); //* id check
-      }
+    //       passenger = await Passenger.create(passengerInfo);
+    //     }
+    //   } else {
+    //     //* string olarak id bilgisi gelirse
+    //     passenger = await Passenger.findOne({ _id: passengerInfo }); //* id check
+    //   }
 
-      if (passenger) passengerIds.push(passenger._id);
-    }
+    //   if (passenger) passengerIds.push(passenger._id);
+    // }
 
+    const passengerIds = await processPassengers(
+      Passenger,
+      req.body?.passengers || {},
+      req.user._id
+    );
+    //   //* passenger bilgisi varsa passengersa ait id bilgisi arraye ekle
     req.body.passengers = passengerIds;
 
     const newReservation = await Reservation.create(req.body);
