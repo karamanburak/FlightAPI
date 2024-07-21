@@ -63,17 +63,17 @@ module.exports = {
             #swagger.summary = "Get Single Reservation"
         */
 
-    if (!req.user.isAdmin && !req.user.isStaff) {
-      const checkData = await Reservation.findOne({ _id: req.params.id });
-      // console.log(typeof checkData.createdId); // object
-      // console.log(typeof req.user._id); // object
-      if (checkData.createdId?.toString() != req.user._id.toString()) {
-        throw new CustomError(
-          "NoPermission! You must be staff or admin or own!",
-          403
-        );
-      }
-    }
+    // if (!req.user.isAdmin && !req.user.isStaff) {
+    //   const checkData = await Reservation.findOne({ _id: req.params.id });
+    //   // console.log(typeof checkData.createdId); // object
+    //   // console.log(typeof req.user._id); // object
+    //   if (checkData.createdId?.toString() != req.user._id.toString()) {
+    //     throw new CustomError(
+    //       "NoPermission! You must be staff or admin or own!",
+    //       403
+    //     );
+    //   }
+    // }
 
     const reservation = await Reservation.findOne({
       _id: req.params.id,
@@ -96,15 +96,15 @@ module.exports = {
         */
     req.body.createdId = req.user._id;
 
-    if (!req.user.isAdmin && !req.user.isStaff) {
-      const checkData = await Reservation.findOne({ _id: req.params.id });
-      if (checkData.createdId?.toString() != req.user._id.toString()) {
-        throw new CustomError(
-          "NoPermission! You must be staff or admin or own!",
-          403
-        );
-      }
-    }
+    // if (!req.user.isAdmin && !req.user.isStaff) {
+    //   const checkData = await Reservation.findOne({ _id: req.params.id });
+    //   if (checkData.createdId?.toString() != req.user._id.toString()) {
+    //     throw new CustomError(
+    //       "NoPermission! You must be staff or admin or own!",
+    //       403
+    //     );
+    //   }
+    // }
 
     const reservation = await Reservation.updateOne(
       { _id: req.params.id },
