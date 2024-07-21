@@ -1,4 +1,5 @@
 "use strict";
+const { CustomError } = require("../errors/customError");
 /* -------------------------------------------------------
     NODEJS EXPRESS | FlightAPI
 ------------------------------------------------------- */
@@ -18,11 +19,18 @@ module.exports = {
                 </ul>
             `
         */
-    const data = await res.getModelList(Passenger);
+
+    let customFilter = {};
+
+    if (!req.user.isAdmin && !req.user.isStaff) {
+      customFilter = { createdId: req.user._id };
+    }
+
+    const data = await res.getModelList(Passenger, customFilter);
 
     res.status(200).send({
       error: false,
-      details: await res.getModelListDetails(Passenger),
+      details: await res.getModelListDetails(Passenger, customFilter),
       data,
     });
   },
@@ -51,6 +59,17 @@ module.exports = {
             #swagger.tags = ["Passengers"]
             #swagger.summary = "Get Single Passenger"
         */
+
+    //* isAdminOrStaffOrOwn
+    if (!req.user.isAdmin && !req.user.isStaff) {
+      const checkData = await Passenger.findOne({ _id: req.params.id });
+      if (checkData.createdId?.toString() != req.user._id.toString()) {
+        throw new CustomError(
+          "NoPermission!You must be admin or staff or own!"
+        );
+      }
+    }
+
     const data = await Passenger.findOne({ _id: req.params.id }).populate(
       "createdId"
     );

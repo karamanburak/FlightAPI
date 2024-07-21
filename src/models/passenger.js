@@ -34,7 +34,7 @@ const PassengerSchema = new mongoose.Schema(
     },
     createdId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "user",
+      ref: "User",
       required: true,
     },
   },
