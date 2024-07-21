@@ -4,6 +4,7 @@ const { CustomError } = require("../errors/customError");
     NODEJS EXPRESS | FlightAPI
 ------------------------------------------------------- */
 const Reservation = require("../models/reservation");
+const Passenger = require("../models/passenger");
 
 module.exports = {
   list: async (req, res) => {
@@ -49,7 +50,40 @@ module.exports = {
             }
         */
     req.body.createdId = req.user._id;
-    // console.log(req.user._id);
+
+    // [
+    //   "6694e8b89904ed18fd8ccd3f",
+    //   "6694f099503211178a406aac",
+    //   {
+    //     firstName: "Denemes",
+    //     lastName: "1denme",
+    //     email: "denemes1@deneme.com",
+    //   },
+    // ];
+
+    let passengerInfos = req.body?.passengers || [],
+      passengerIds = [],
+      passenger = {};
+
+    for (let passengerInfo of passengerInfos) {
+      if (typeof passengerInfo == "object") {
+        passenger = await Passenger.findOne({ email: passengerInfo.email }); //* reelde email degil unique olan tckn/passportId
+        if (!passenger) {
+          // passengerInfo = { ...passengerInfo, createdId: req.user._id };
+          Object.assign(passengerInfo, { createdId: req.user._id }); //* passenger create ederken benden createdId değeri bekliyor.
+
+          passenger = await Passenger.create(passengerInfo);
+        }
+      } else {
+        //* string olarak id bilgisi gelirse
+        passenger = await Passenger.findOne({ _id: passengerInfo }); //* id check
+      }
+
+      if (passenger) passengerIds.push(passenger._id);
+    }
+
+    req.body.passengers = passengerIds;
+
     const newReservation = await Reservation.create(req.body);
 
     res.status(201).send({

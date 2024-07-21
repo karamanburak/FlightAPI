@@ -64,6 +64,12 @@ module.exports = {
             #swagger.summary = "Update User"
         */
 
+    //* Kullanici statusu degistirme yetkisi sadece adminde olacak
+    if (!req.user.isAdmin) {
+      delete req.body.isAdmin;
+      delete req.body.isStaff;
+      delete req.body.isActive;
+    }
     if (req.file) {
       req.body.avatar = "/uploads/" + req.file.filename;
     }
