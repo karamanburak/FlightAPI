@@ -25,8 +25,18 @@ router
   .route("/:id")
   .all(idValidation)
   .get(getModel, permission.isAdminOrStaffOrOwn, user.read)
-  .put(getModel, permission.isAdminOrStaffOrOwn, user.update)
-  .patch(getModel, permission.isAdminOrStaffOrOwn, user.update)
+  .put(
+    getModel,
+    permission.isAdminOrStaffOrOwn,
+    upload.single("avatar"),
+    user.update
+  )
+  .patch(
+    getModel,
+    permission.isAdminOrStaffOrOwn,
+    upload.single("avatar"),
+    user.update
+  )
   .delete(permission.isLoginAdmin, user.delete);
 
 /* ------------------------------------------------------- */

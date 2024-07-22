@@ -4,6 +4,7 @@
 ------------------------------------------------------- */
 
 const User = require("../models/user");
+const fs = require("node:fs");
 
 module.exports = {
   list: async (req, res) => {
@@ -73,9 +74,14 @@ module.exports = {
     if (req.file) {
       req.body.avatar = "/uploads/" + req.file.filename;
     }
-    const user = await User.updateOne({ _id: req.params.id }, req.body, {
+    const user = await User.findOneAndUpdate({ _id: req.params.id }, req.body, {
       runValidators: true,
     });
+
+    //* eski resmi silme islemi
+    if (req.file && user.avatar) {
+      fs.unlink(`.${user.avatar}`, (err) => console.log(err));
+    }
 
     res.status(202).send({
       error: false,
@@ -88,10 +94,15 @@ module.exports = {
             #swagger.tags = ["Users"]
             #swagger.summary = "Delete User"
         */
-    const users = await User.deleteOne({ _id: req.params.id });
-    res.status(users.deletedCount ? 204 : 404).send({
-      error: !users.deletedCount,
-      users,
+    // const user = await User.deleteOne({ _id: req.params.id });
+    const user = await User.findOneAndDelete({ _id: req.params.id });
+    //* eski resmi silme islemi
+    if (user.avatar) {
+      fs.unlink(`.${user.avatar}`, (err) => console.log(err));
+    }
+    res.status(user ? 204 : 404).send({
+      error: !user,
+      user,
       message: "User not found!",
     });
   },
