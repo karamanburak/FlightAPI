@@ -4,6 +4,7 @@
 ------------------------------------------------------- */
 
 const { mongoose } = require("../configs/dbConnection");
+const dateToLocaleString = require("../helpers/dateToLocaleString");
 
 const FlightSchema = new mongoose.Schema(
   {
@@ -61,16 +62,23 @@ const FlightSchema = new mongoose.Schema(
 
 //* init => veriyi databaseden cektikten sonra frontende teslim edecekken db de olmayan bir veriyi araya bir islem yaparak veri eklemeye yarar.
 FlightSchema.pre("init", function (document) {
-  console.log(document);
+  //https://www.w3schools.com/jsref/jsref_tolocalestring.asp
+  // console.log(document);
   // document.user = "burak";
-  document.departureDateStr = document.departureDate.toLocaleString("de-DE", {
-    dateStyle: "full",
-    timeStyle: "medium",
-  });
-  document.arrivalDateStr = document.arrivalDate.toLocaleString("de-DE", {
-    dateStyle: "full",
-    timeStyle: "medium",
-  });
+  // document.departureDateStr = document.departureDate.toLocaleString("de-DE", {
+  //   dateStyle: "full",
+  //   timeStyle: "medium",
+  // });
+  // document.arrivalDateStr = document.arrivalDate.toLocaleString("de-DE", {
+  //   dateStyle: "full",
+  //   timeStyle: "medium",
+  // });
+  document.departureDateStr = dateToLocaleString(
+    "de-DE",
+    document.departureDate
+  );
+  document.arrivalDateStr = dateToLocaleString("de-DE", document.arrivalDate);
+  document.__v = undefined;
 });
 
 module.exports = mongoose.model("Flight", FlightSchema);
