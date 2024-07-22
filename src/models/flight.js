@@ -59,4 +59,18 @@ const FlightSchema = new mongoose.Schema(
   }
 );
 
+//* init => veriyi databaseden cektikten sonra frontende teslim edecekken db de olmayan bir veriyi araya bir islem yaparak veri eklemeye yarar.
+FlightSchema.pre("init", function (document) {
+  console.log(document);
+  // document.user = "burak";
+  document.departureDateStr = document.departureDate.toLocaleString("de-DE", {
+    dateStyle: "full",
+    timeStyle: "medium",
+  });
+  document.arrivalDateStr = document.arrivalDate.toLocaleString("de-DE", {
+    dateStyle: "full",
+    timeStyle: "medium",
+  });
+});
+
 module.exports = mongoose.model("Flight", FlightSchema);
