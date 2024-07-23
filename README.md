@@ -53,3 +53,10 @@
  ┣ 📜README.md
  ┗ 📜swaggerAutogen.js
 ```
+
+## Documentations
+
+- [View Postman Documentation](https://documenter.getpostman.com/view/32987022/2sA3kVmMNX)
+- [View Swagger Documentation]()
+- [View Redoc Documentation]()
+- [View Json Documentation]()
