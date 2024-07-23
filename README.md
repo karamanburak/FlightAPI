@@ -1,5 +1,7 @@
 # FLIGHT API
 
+- [FlightAPI Live Link](https://flightapi-9jkz.onrender.com/)
+
 ### ERD:
 
 ![ERD](./flightApiERD.png)
@@ -57,6 +59,6 @@
 ## Documentations
 
 - [View Postman Documentation](https://documenter.getpostman.com/view/32987022/2sA3kVmMNX)
-- [View Swagger Documentation]()
-- [View Redoc Documentation]()
-- [View Json Documentation]()
+- [View Swagger Documentation](https://flightapi-9jkz.onrender.com/documents/swagger/)
+- [View Redoc Documentation](https://flightapi-9jkz.onrender.com/documents/redoc)
+- [View Json Documentation](https://flightapi-9jkz.onrender.com/documents/json)
