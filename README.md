@@ -11,18 +11,22 @@
 ```
 📦src
  ┣ 📂configs
- ┃ ┗ 📜dbConnection.js
+ ┃ ┣ 📜dbConnection.js
+ ┃ ┗ 📜swagger.json
  ┣ 📂controllers
  ┃ ┣ 📜auth.js
  ┃ ┣ 📜flight.js
  ┃ ┣ 📜passenger.js
  ┃ ┣ 📜reservation.js
+ ┃ ┣ 📜token.js
  ┃ ┗ 📜user.js
  ┣ 📂errors
  ┃ ┗ 📜customError.js
  ┣ 📂helpers
+ ┃ ┣ 📜dateToLocaleString.js
  ┃ ┣ 📜passwordEncrypt.js
- ┃ ┗ 📜sendMail.js
+ ┃ ┣ 📜sendMail.js
+ ┃ ┗ 📜sendToken.js
  ┣ 📂middlewares
  ┃ ┣ 📜authentication.js
  ┃ ┣ 📜errorHandler.js
@@ -35,6 +39,7 @@
  ┃ ┣ 📜flight.js
  ┃ ┣ 📜passenger.js
  ┃ ┣ 📜reservation.js
+ ┃ ┣ 📜token.js
  ┃ ┗ 📜user.js
  ┗ 📂routes
  ┃ ┣ 📜auth.js
@@ -43,9 +48,10 @@
  ┃ ┣ 📜index.js
  ┃ ┣ 📜passenger.js
  ┃ ┣ 📜reservation.js
+ ┃ ┣ 📜token.js
  ┃ ┗ 📜user.js
+ ┃ 📂uploads
  ┃ 📂logs
- ┣ 📜.env
  ┣ 📜.env-sample
  ┣ 📜.gitignore
  ┣ 📜flightApiERD.png
